@@ -1,0 +1,42 @@
+# Render Blueprint: New > Blueprint > pick this repo.
+# Creates Postgres, the API and the frontend. Set LLM_API_KEY in the
+# lantern-api service's environment afterwards to enable the AI model.
+databases:
+  - name: lantern-db
+    plan: free
+    databaseName: lantern
+    user: lantern
+
+services:
+  - type: web
+    name: lantern-api
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: lantern-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ENVIRONMENT
+        value: production
+      - key: LLM_BASE_URL
+        value: https://api.groq.com/openai/v1
+      - key: LLM_MODEL
+        value: llama-3.3-70b-versatile
+      - key: LLM_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false # e.g. https://lantern-web.onrender.com
+
+  - type: web
+    name: lantern-web
+    runtime: docker
+    rootDir: frontend
+    plan: free
+    envVars:
+      - key: API_UPSTREAM
+        sync: false # e.g. https://lantern-api.onrender.com
