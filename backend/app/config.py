@@ -1,3 +1,4 @@
+import re
 from functools import lru_cache
 
 from pydantic import field_validator
@@ -48,8 +49,12 @@ class Settings(BaseSettings):
             v = "postgresql://" + v[len("postgres://"):]
         if v.startswith("postgresql://"):
             v = "postgresql+asyncpg://" + v[len("postgresql://"):]
-        # asyncpg does not understand sslmode=require in the query string
+        # asyncpg does not understand sslmode=require in the query string,
+        # and rejects channel_binding (added to Neon connection strings).
         v = v.replace("sslmode=require", "ssl=require")
+        v = re.sub(r"[?&]channel_binding=[^&]*", "", v)
+        if "?" not in v and "&" in v:
+            v = v.replace("&", "?", 1)
         return v
 
     @property
