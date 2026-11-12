@@ -14,6 +14,8 @@ FROM nginx:1.27-alpine
 # The official image renders /etc/nginx/templates/*.template with envsubst on start
 COPY nginx.conf /etc/nginx/templates/default.conf.template
 ENV API_UPSTREAM=http://backend:8000
-ENV NGINX_ENVSUBST_FILTER=API_UPSTREAM
+ENV PORT=80
+ENV NGINX_ENTRYPOINT_LOCAL_RESOLVERS=1
+ENV NGINX_ENVSUBST_FILTER=^(API_UPSTREAM|PORT|NGINX_LOCAL_RESOLVERS)$
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
