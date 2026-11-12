@@ -45,6 +45,9 @@ class Settings(BaseSettings):
     @field_validator("database_url")
     @classmethod
     def normalise_db_url(cls, v: str) -> str:
+        # Dashboard-pasted values often carry a trailing newline, which would
+        # otherwise end up in the database name ("railway\n").
+        v = v.strip()
         if v.startswith("postgres://"):
             v = "postgresql://" + v[len("postgres://"):]
         if v.startswith("postgresql://"):
