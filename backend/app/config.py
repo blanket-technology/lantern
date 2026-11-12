@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     # Leave llm_api_key empty to run the built-in offline companion.
     llm_api_key: str = ""
     llm_base_url: str = "https://api.groq.com/openai/v1"
-    llm_model: str = "llama-3.3-70b-versatile"
+    llm_model: str = "openai/gpt-oss-120b"
     llm_temperature: float = 0.7
     llm_max_tokens: int = 600
     llm_timeout_seconds: float = 60.0

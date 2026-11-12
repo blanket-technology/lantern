@@ -108,7 +108,7 @@ Open http://localhost:5173. Vite proxies `/api` to port 8000, so you don't need 
 
 ## Getting a free AI key
 
-[Groq](https://console.groq.com) has a free tier and is fast enough for streaming chat. Create a key and put it in `LLM_API_KEY`. The defaults in `.env.example` already point to Groq's `llama-3.3-70b-versatile`.
+[Groq](https://console.groq.com) has a free tier and is fast enough for streaming chat. Create a key and put it in `LLM_API_KEY`. The defaults in `.env.example` already point to Groq's `openai/gpt-oss-120b`.
 
 To run fully on your own machine, install [Ollama](https://ollama.com), pull a model, and set:
 
@@ -132,7 +132,7 @@ The line under the chat input shows which mode is active: "AI model connected" o
 | `CORS_ORIGINS` | localhost | Comma-separated frontend URLs allowed to call the API |
 | `LLM_API_KEY` | empty | Empty means offline companion |
 | `LLM_BASE_URL` | Groq | Any OpenAI-compatible `/v1` endpoint |
-| `LLM_MODEL` | `llama-3.3-70b-versatile` | Model name for that provider |
+| `LLM_MODEL` | `openai/gpt-oss-120b` | Model name for that provider |
 | `LLM_TEMPERATURE` | `0.7` | |
 | `LLM_MAX_TOKENS` | `600` | Max length of each reply |
 | `LLM_FORCE_ENABLED` | `false` | Use the model without a key (Ollama) |
