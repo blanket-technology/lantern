@@ -23,6 +23,9 @@ class Settings(BaseSettings):
 
     # CORS: comma-separated list of allowed frontend origins
     cors_origins: str = "http://localhost:5173,http://localhost:3000"
+    # Optional regex for extra origins, e.g. Vercel preview URLs:
+    # ^https://lantern[a-z0-9-]*\.vercel\.app$
+    cors_origin_regex: str = ""
 
     # LLM. Any OpenAI-compatible endpoint works: OpenAI, Groq, OpenRouter,
     # Together, or a local Ollama server (http://localhost:11434/v1).

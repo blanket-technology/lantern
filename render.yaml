@@ -1,6 +1,7 @@
 # Render Blueprint: New > Blueprint > pick this repo.
-# Creates Postgres, the API and the frontend. Set LLM_API_KEY in the
-# lantern-api service's environment afterwards to enable the AI model.
+# Creates Postgres and the API. The frontend is hosted on Vercel; set
+# VITE_API_URL there to this API's URL. Set LLM_API_KEY afterwards to
+# enable the AI model (otherwise the offline companion is used).
 databases:
   - name: lantern-db
     plan: free
@@ -30,13 +31,6 @@ services:
       - key: LLM_API_KEY
         sync: false
       - key: CORS_ORIGINS
-        sync: false # e.g. https://lantern-web.onrender.com
-
-  - type: web
-    name: lantern-web
-    runtime: docker
-    rootDir: frontend
-    plan: free
-    envVars:
-      - key: API_UPSTREAM
-        sync: false # e.g. https://lantern-api.onrender.com
+        sync: false # your Vercel URL, e.g. https://lantern.vercel.app
+      - key: CORS_ORIGIN_REGEX
+        value: ^https://lantern[a-z0-9-]*\.vercel\.app$
